@@ -15,8 +15,8 @@ RGBColour = Tuple[int, int, int]
 @dataclasses.dataclass
 class GraphicsState:
     pos: Coord = (0, 0)
-    angle_rel: float = 90
-    angle_abs: float = 90
+    angle_rel: float = 45
+    angle_abs: float = 45
     length: float = 50
     reverse: bool = False
     colour: int = 0
@@ -62,6 +62,7 @@ class Canvas:
     @order.setter
     def order(self, value: int) -> None:
         self._lsystem.order = max(value, 0)
+        print(self._lsystem.order, self._lsystem.expander.get_str(self._lsystem.order))
 
     @property
     def angle(self) -> int:
@@ -186,7 +187,9 @@ class Canvas:
         # Draws line from `coord` to current position
         index = self.state.colour % (len(self.colours) - 1)
         colour = self.colours[index + 1]  # index 0 is the background colour
-        pygame.draw.aaline(self.screen, colour, coord, self.state.pos)
+        draw_fn = pygame.draw.aaline
+        draw_fn = pygame.draw.line
+        draw_fn(self.screen, colour, coord, self.state.pos, 5)
 
     def move_rel(self) -> None:
         self._move(self.state.angle_rel)

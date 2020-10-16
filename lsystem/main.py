@@ -6,7 +6,7 @@ import pygame  # type: ignore
 from lsystem.canvas import Canvas
 from lsystem.load import load
 
-FPS = 50
+FPS = 10
 
 
 def main():
